@@ -1,28 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>Divine Corporation Search</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; }
-        #searchInput { padding: 10px; width: 300px; margin-bottom: 20px; }
-        .employee-card { border: 1px solid #ccc; padding: 20px; border-radius: 10px; display: inline-block; text-align: left; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Corporation Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-50">
 
-    <h1>Divine Corporation Search</h1>
-    <input type="text" id="searchInput" placeholder="Enter ID to search...">
-    <div id="result"></div>
+<div class="min-h-screen flex flex-col items-center justify-center p-6">
+  <div class="max-w-md w-full space-y-8">
+    <h2 class="text-center text-3xl font-extrabold text-gray-900">
+      Divine Corporation Search
+    </h2>
+    
+    <div class="relative">
+      <input type="text" id="searchInput"
+             class="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" 
+             placeholder="Employee ID বা নাম লিখুন...">
+    </div>
 
-    <script>
-        // এখানে আপনার CSV লিংকটি বসাতে হবে
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQA9ajIvTkrDEU4Btrju_MP1NhLPlaGs1AISlrC2DzXk1-iEX1AMw0nCZrLPoWCrQ/pub?gid=1955038929&single=true&output=csv';
+    <!-- রেজাল্ট কার্ড -->
+    <div id="result-card" class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hidden">
+      <div id="result-content"></div>
+    </div>
+  </div>
+</div>
 
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const id = e.target.value;
-            // এখানে JavaScript কোড দিয়ে CSV থেকে ডাটা খুঁজে বের করার লজিক বসবে
-            // যেহেতু এটি কিছুটা জটিল, আপনি কি চান আমি আপনাকে একটি রেডিমেড সার্চ টুল খুঁজে দিই?
-        });
-    </script>
+<script>
+// আপনার ডাটাবেস
+const employees = [
+  {"id": "DSO-01", "name": "MD. HRIDOY MOLLAH", "designation": "DSO", "status": "Resigned"},
+  {"id": "DSO-02", "name": "MD. SAHIDUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-03", "name": "MD. SHAHIN ALAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-04", "name": "MD. MIZANUR RAHMAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-05", "name": "MD. ABDULLAH AL MAMUN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-06", "name": "MD. RASEL MIA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-07", "name": "MD. ZUBAIR HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-08", "name": "MD. SUMON AHMED", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-09", "name": "MD. RIPON HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-10", "name": "MD. RAHAT UDDIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-11", "name": "MD. SABBIR HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-12", "name": "MD. ASADUZZAMAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-13", "name": "MD. MAHMUDUL HASAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-14", "name": "MD. ARIFUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-15", "name": "MD. EMON HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-16", "name": "MD. SHORIF UDDIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-17", "name": "MD. SAJIB MIA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-18", "name": "MD. RONY HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-19", "name": "MD. PARVEZ AHMED", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-20", "name": "MD. RAFIQUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-21", "name": "MD. SHOHEL RANA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-22", "name": "MD. NAYEM HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-23", "name": "MD. FARUK AHMED", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-24", "name": "MD. ISMAIL HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-25", "name": "MD. JAHIDUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-26", "name": "MD. LITON MIA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-27", "name": "MD. ALAMIN HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-28", "name": "MD. TOUHIDUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-29", "name": "MD. RAKIB HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-30", "name": "MD. MAMUN MIA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-31", "name": "MD. HABIBUR RAHMAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-32", "name": "MD. KAWSAR AHMED", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-33", "name": "MD. MASUM BILLAH", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-34", "name": "MD. BELAL HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-35", "name": "MD. MONIR HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-36", "name": "MD. SHAHJAHAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-37", "name": "MD. IMAM HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-38", "name": "MD. SHOHAG MIA", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-39", "name": "MD. MOKLESUR RAHMAN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-40", "name": "MD. SHAMIM AHMED", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-41", "name": "MD. TAREQ HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-42", "name": "MD. ZAHIRUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-43", "name": "MD. SALMAN FARSI", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-44", "name": "MD. RABBANI", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-45", "name": "MD. FORHAD HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-46", "name": "MD. KHALID HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-47", "name": "MD. MOKTER HOSSAIN", "designation": "DSO", "status": "Active"},
+  {"id": "DSO-48", "name": "MD. ASHRAFUL ISLAM", "designation": "DSO", "status": "Active"},
+  {"id": "DSS-01", "name": "MD. ABDUL KARIM", "designation": "DSS", "status": "Active"},
+  {"id": "DSS-02", "name": "MD. ABUL KALAM", "designation": "DSS", "status": "Active"},
+  {"id": "DSS-03", "name": "MD. SAIDUR RAHMAN", "designation": "DSS", "status": "Active"},
+  {"id": "DSS-04", "name": "MD. NURUL ISLAM", "designation": "DSS", "status": "Active"},
+  {"id": "DSS-05", "name": "MD. ANOWAR HOSSAIN", "designation": "DSS", "status": "Active"},
+  {"id": "IT/ADMIN-01", "name": "MD. RIFAT", "designation": "IT/ADMIN", "status": "Active"},
+  {"id": "ACC-01", "name": "MD. MAZHARUL ISLAM", "designation": "Accounts", "status": "Active"},
+  {"id": "MC-01", "name": "MD. HASIBUL", "designation": "MC", "status": "Active"}
+];
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const term = e.target.value.toUpperCase();
+    const resultCard = document.getElementById('result-card');
+    const resultDiv = document.getElementById('result-content');
+    
+    if (term.length < 2) {
+        resultCard.classList.add('hidden');
+        return;
+    }
+
+    const found = employees.find(emp => emp.id.includes(term) || emp.name.includes(term));
+
+    if (found) {
+        resultCard.classList.remove('hidden');
+        resultDiv.innerHTML = `
+            <p class="text-sm text-gray-500 uppercase">${found.id}</p>
+            <h3 class="text-xl font-bold text-gray-800">${found.name}</h3>
+            <p class="text-blue-600 font-semibold">${found.designation}</p>
+            <span class="inline-block mt-2 px-3 py-1 text-xs font-bold rounded-full ${found.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                ${found.status}
+            </span>
+        `;
+    } else {
+        resultCard.classList.remove('hidden');
+        resultDiv.innerHTML = `<p class="text-red-500">কোনো তথ্য পাওয়া যায়নি!</p>`;
+    }
+});
+</script>
 </body>
 </html>
