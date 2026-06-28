@@ -1,183 +1,42 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divine Corporation Portal</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Divine Corporation - Staff Records</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #ccc; overflow-x: auto; }
+        h1 { color: #333; text-align: center; }
+        
+        /* টেবিলের ডিজাইন */
+        table.tableizer-table { font-size: 12px; border: 1px solid #CCC; font-family: Arial, sans-serif; width: 100%; border-collapse: collapse; }
+        .tableizer-table td { padding: 8px; border: 1px solid #CCC; text-align: center; }
+        .tableizer-table th { background-color: #104E8B; color: #FFF; font-weight: bold; padding: 10px; }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body>
 
-<div class="min-h-screen flex flex-col items-center justify-center p-6">
-  <div class="max-w-md w-full space-y-8">
-    <h2 class="text-center text-3xl font-extrabold text-gray-900">
-      Divine Corporation Search
-    </h2>
-    
-    <div class="relative">
-      <input type="text" id="searchInput"
-             class="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" 
-             placeholder="Employee ID বা নাম লিখুন...">
-    </div>
+<div class="container">
+    <h1>Divine Corporation</h1>
+    <p style="text-align:center;">Our Dedicated Team Records</p>
 
-    <!-- রেজাল্ট কার্ড -->
-    <div id="result-card" class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hidden">
-      <div id="result-content"></div>
-    </div>
-  </div>
+    <!-- আপনার এক্সেল থেকে কনভার্ট করা টেবিল -->
+    <table class="tableizer-table">
+        <thead>
+            <tr class="tableizer-firstrow">
+                <th>Business Wallet</th><th>Designation</th><th>Full Name</th><th>DOB</th><th>ID Type</th>
+                <th>ID Number</th><th>Contact</th><th>Joining Date</th><th>Acc Name</th><th>Acc No</th>
+                <th>Bank Name</th><th>Branch</th><th>Routing</th><th>Nominee Name</th><th>Nominee DOB</th>
+                <th>Nominee ID Type</th><th>Nominee ID No</th><th>Nominee Contact</th><th>Relation</th><th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- এখানে আপনার এক্সেলের ডাটাগুলো আছে -->
+            <tr><td>01958226001</td><td>IT/ADMIN</td><td>MD. JAHANGIR ALAM</td><td>1-Sep-96</td><td>NID</td><td>4178563567</td><td>01580109742</td><td>11-Aug-24</td><td>MD. JAHANGIR ALAM</td><td>3581052820625</td><td>Islami Bank</td><td>Local Office</td><td>125270007</td><td>MST. MAHBUBA SULTANA</td><td>17-Apr-98</td><td>NID</td><td>5558045257</td><td>01615813068</td><td>SPOUSE</td><td>Active</td></tr>
+            <!-- এভাবে বাকি সারিগুলো যুক্ত করুন -->
+        </tbody>
+    </table>
 </div>
 
-<script>
-// আপনার ডাটাবেস
-const employees = [
-    {
-        "DSO Business Wallet": 1958226001,
-        "DHFF Type/Designation": "IT/ADMIN",
-        "Full Name (As Per NID)": "MD. JAHANGIR ALAM",
-        "DOB\n (DD/MM/YY)": "1996-09-01",
-        "Blood Group": "O+",
-        "ID Type\n (NID/BC/Passport/DL)": "NID",
-        "ID Number": 4178563567.0,
-        "Nagad Personal Wallet Number": 1580109742,
-        "Joining Date\n (DD/MM/YYYY)": "2024-08-11",
-        "AccName": "MD. JAHANGIR ALAM",
-        "AccNo": "3581052820625",
-        "BankName": "Islami Bank Bangladesh LTD",
-        "BranchName": "Local Office",
-        "Routing No": 125270007,
-        "Nominee Name(as per ID)": "MST. MAHBUBA SULTANA AYERIN",
-        "Nominee DOB\n (DD/MM/YY)": "1998-04-17",
-        "ID Type": "NID",
-        "ID Number.1": 5558045257,
-        "Contact Number": 1615813068,
-        "Relation Type\n (Ex.- Father,Mother,Spouse,Brother)": "SPOUSE",
-        "DHFF Service Status\n  (Active/ Resigned)": "Active"
-    },
-    {
-        "DSO Business Wallet": 1958226002,
-        "DHFF Type/Designation": "Accounts",
-        "Full Name (As Per NID)": "MD. MILON MIA",
-        "DOB\n (DD/MM/YY)": "1997-03-07",
-        "Blood Group": "O+",
-        "ID Type\n (NID/BC/Passport/DL)": "NID",
-        "ID Number": 6908085456.0,
-        "Nagad Personal Wallet Number": 1989238128,
-        "Joining Date\n (DD/MM/YYYY)": "2025-02-22",
-        "AccName": "MD. MILON MIA",
-        "AccNo": "7863241000954458",
-        "BankName": "UNITED COMMERCIAL BANK LTD.",
-        "BranchName": "JOYDEBPUR",
-        "Routing No": 245330735,
-        "Nominee Name(as per ID)": "AMINA KHATUN",
-        "Nominee DOB\n (DD/MM/YY)": "1997-01-01",
-        "ID Type": "NID",
-        "ID Number.1": 5125814359,
-        "Contact Number": 1706526395,
-        "Relation Type\n (Ex.- Father,Mother,Spouse,Brother)": "SPOUSE",
-        "DHFF Service Status\n  (Active/ Resigned)": "Active"
-    },
-    {
-        "Photo": "Employee_List_Images/MD. RASEL RAJ.Photo.060736.jpg",
-        "DSO Business Wallet": 1725138290,
-        "DHFF Type/Designation": "BACKUP DSO",
-        "Full Name (As Per NID)": "MD. RASEL RAJ",
-        "DOB\n (DD/MM/YY)": "1996-05-01",
-        "Blood Group": "A+",
-        "ID Type\n (NID/BC/Passport/DL)": "NID",
-        "ID Number": 9576362627.0,
-        "Nagad Personal Wallet Number": 1725138290,
-        "Joining Date\n (DD/MM/YYYY)": "2022-06-01",
-        "AccName": "MD. RASEL RAJ",
-        "AccNo": "7863241000952738",
-        "BankName": "UNITED COMMERCIAL BANK LTD.",
-        "BranchName": "JOYDEBPUR",
-        "Routing No": 245330735,
-        "Nominee Name(as per ID)": "MONOYARA BEGUM",
-        "Nominee DOB\n (DD/MM/YY)": "1962-05-03",
-        "ID Type": "NID",
-        "ID Number.1": 5970137716,
-        "Contact Number": 1342645178,
-        "Relation Type\n (Ex.- Father,Mother,Spouse,Brother)": "MOTHER",
-        "DHFF Service Status\n  (Active/ Resigned)": "Active"
-    },
-    {
-        "Photo": "Employee_List_Images/01725374873.Photo.110901.jpg",
-        "DSO Business Wallet": 1725374873,
-        "DHFF Type/Designation": "DM",
-        "Full Name (As Per NID)": "TUFAWAL AHAMMED",
-        "DOB\n (DD/MM/YY)": "1991-10-01",
-        "Blood Group": "A+",
-        "ID Type\n (NID/BC/Passport/DL)": "NID",
-        "ID Number": 1.991721408e+16,
-        "Nagad Personal Wallet Number": 1725374873,
-        "Joining Date\n (DD/MM/YYYY)": "2019-09-19",
-        "AccName": "TUFAWAL AHAMMED",
-        "AccNo": "2001202853882001",
-        "BankName": "BRAC Bank",
-        "BranchName": "JOYDEBPUR",
-        "Routing No": 60330736,
-        "Nominee Name(as per ID)": "MST. TANJILA AKTER EMI",
-        "Nominee DOB\n (DD/MM/YY)": "2002-10-05",
-        "ID Type": "Birth Certificate",
-        "ID Number.1": 20027217439003314,
-        "Contact Number": 1601374873,
-        "Relation Type\n (Ex.- Father,Mother,Spouse,Brother)": "SPOUSE",
-        "DHFF Service Status\n  (Active/ Resigned)": "Active"
-    },
-    {
-        "Photo": "Employee_List_Images/RAYHAN.Photo.055919.jpg",
-        "DSO Business Wallet": 1958226003,
-        "DHFF Type/Designation": "DSO",
-        "Full Name (As Per NID)": "RAYHAN",
-        "DOB\n (DD/MM/YY)": "2000-02-02",
-        "Blood Group": "A+",
-        "ID Type\n (NID/BC/Passport/DL)": "NID",
-        "ID Number": 6011747059.0,
-        "Nagad Personal Wallet Number": 1867831414,
-        "Joining Date\n (DD/MM/YYYY)": "2024-03-19",
-        "AccName": "RAYHAN",
-        "AccNo": "7012100007039",
-        "BankName": "Southeast Bank PLC",
-        "BranchName": "Joydebpur Branch",
-        "Routing No": 205330733,
-        "Nominee Name(as per ID)": "LITON",
-        "Nominee DOB\n (DD/MM/YY)": "1969-01-01",
-        "ID Type": "NID",
-        "ID Number.1": 9569188874,
-        "Contact Number": 1981770138,
-        "Relation Type\n (Ex.- Father,Mother,Spouse,Brother)": "FATHER",
-        "DHFF Service Status\n  (Active/ Resigned)": "Active"
-    }
-]
-
-document.getElementById('searchInput').addEventListener('input', function(e) {
-    const term = e.target.value.toUpperCase();
-    const resultCard = document.getElementById('result-card');
-    const resultDiv = document.getElementById('result-content');
-    
-    if (term.length < 2) {
-        resultCard.classList.add('hidden');
-        return;
-    }
-
-    const found = employees.find(emp => emp.id.includes(term) || emp.name.includes(term));
-
-    if (found) {
-        resultCard.classList.remove('hidden');
-        resultDiv.innerHTML = `
-            <p class="text-sm text-gray-500 uppercase">${found.id}</p>
-            <h3 class="text-xl font-bold text-gray-800">${found.name}</h3>
-            <p class="text-blue-600 font-semibold">${found.designation}</p>
-            <span class="inline-block mt-2 px-3 py-1 text-xs font-bold rounded-full ${found.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
-                ${found.status}
-            </span>
-        `;
-    } else {
-        resultCard.classList.remove('hidden');
-        resultDiv.innerHTML = `<p class="text-red-500">কোনো তথ্য পাওয়া যায়নি!</p>`;
-    }
-});
-</script>
 </body>
 </html>
