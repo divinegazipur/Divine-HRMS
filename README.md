@@ -1,1 +1,1 @@
-# Divine-HRMS
+# Divinegz
