@@ -2,18 +2,13 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import EmployeeHeader from "@/components/employee/EmployeeHeader";
 import EmployeeGrid from "@/components/employee/EmployeeGrid";
 
-export default function EmployeesPage() {
+export default function Page() {
   return (
     <DashboardLayout>
-
-      <div className="space-y-6">
-
-        <EmployeeHeader />
-
+      <EmployeeHeader />
+      <div className="mt-8">
         <EmployeeGrid />
-
       </div>
-
     </DashboardLayout>
   );
 }

@@ -1,0 +1,8 @@
+export interface Employee {
+
+{% for c in columns %}
+{{c.name}}: {% if c.type=="integer" %}number{% else %}string{% endif %};
+
+{% endfor %}
+
+}

@@ -1,0 +1,53 @@
+"use client";
+
+import { useState } from "react";
+
+export default function EmployeeForm(){
+
+{% for c in columns %}
+
+const [{{c.state}},set{{c.state|capitalize}}]=useState("");
+
+{% endfor %}
+
+return(
+
+<div className="p-10">
+
+<h1 className="text-3xl font-bold mb-8">
+
+{{title}}
+
+</h1>
+
+{% for c in columns %}
+
+<div className="mb-5">
+
+<label className="block mb-2">
+
+{{c.label}}
+
+</label>
+
+<input
+
+type="{{c.input}}"
+
+value={ {{c.state}} }
+
+onChange={(e)=>set{{c.state|capitalize}}(e.target.value)}
+
+className="border rounded-lg p-3 w-full"
+
+/>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+);
+
+}

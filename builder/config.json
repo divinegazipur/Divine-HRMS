@@ -1,0 +1,25 @@
+{
+
+  "project_name": "Divine HRMS",
+
+
+
+  "url": "https://ukvjueladrpcfjnbtgsf.supabase.co",
+
+
+
+  "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVrdmp1ZWxhZHJwY2ZqbmJ0Z3NmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjgxNDY0MiwiZXhwIjoyMDk4MzkwNjQyfQ.EgE3VyUPeQgkF6eX2e7LsaaGg_19AQoUxHZipuYzAag",
+
+
+
+  "frontend": "../frontend/src",
+
+  "components": "../frontend/src/components",
+
+  "app": "../frontend/src/app",
+
+
+
+  "schemas": "schemas"
+
+}

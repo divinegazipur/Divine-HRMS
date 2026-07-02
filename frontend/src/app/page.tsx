@@ -1,17 +1,29 @@
-import DashboardLayout from "@/components/layout/DashboardLayout";
+"use client";
 
-export default function Home() {
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+
+export default function HomePage() {
+  useEffect(() => {
+    async function testConnection() {
+      const { data, error } = await supabase.auth.getSession();
+
+      console.log("Supabase Connected");
+      console.log(data);
+
+      if (error) {
+        console.error(error);
+      }
+    }
+
+    testConnection();
+  }, []);
+
   return (
-    <DashboardLayout>
-
-      <h1 className="text-5xl font-bold">
-        Dashboard
+    <main className="flex min-h-screen items-center justify-center">
+      <h1 className="text-4xl font-bold">
+        Divine HRMS
       </h1>
-
-      <p className="text-gray-500 mt-2">
-        Welcome to Divine Corporation HRMS
-      </p>
-
-    </DashboardLayout>
+    </main>
   );
 }
